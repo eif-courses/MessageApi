@@ -30,9 +30,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(o =>
 {
-    o.AddPolicy("Admin", p => p.    
-    RequireAuthenticatedUser().
-        RequireClaim("scope", "read:admin-messages"));
+    o.AddPolicy("Admin", p => p.RequireAssertion(context =>
+                  context.User.HasClaim(c =>
+                      (c.Type == "permissions" &&
+                      c.Value == "read:admin-messages") &&
+                      c.Issuer == $"https://{builder.Configuration["Auth0:Domain"]}/")));
 });
 
 
