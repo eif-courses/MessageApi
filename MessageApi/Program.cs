@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
        builder =>
        {
-           builder.WithOrigins("http://localhost:4040")
+           builder.WithOrigins("https://spavuenetcore.web.app")
                   .WithHeaders("Authorization");
        });
 });
